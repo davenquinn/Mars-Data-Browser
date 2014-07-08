@@ -6,4 +6,5 @@ gulp.task "browserSync", ["build"], ->
 		"#{config.dist}/scripts/*"
 		"#{config.dist}/styles/*"
 	],
-		proxy: "0.0.0.0:8000"
+	server:
+		baseDir: config.dist
