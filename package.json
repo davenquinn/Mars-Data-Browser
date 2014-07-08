@@ -1,7 +1,7 @@
 {
-  "name": "Gulp Config",
+  "name": "ctx-browser",
   "version": "0.0.1",
-  "description": "A bundle of useful gulp configurations.",
+  "description": "A browser utility for CTX Mars imagery.",
   "main": "Gulpfile.js",
   "devDependencies": {
     "browser-sync": "^0.9.1",
@@ -16,7 +16,7 @@
     "gulp-util": "^2.2.16",
     "pretty-hrtime": "^0.2.1",
     "vinyl-source-stream": "^0.1.1",
-    "watchify": "^0.10.2",
+    "watchify": "^0.10.2"
   },
   "author": "Daven Quinn",
   "license": "MIT"
