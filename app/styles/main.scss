@@ -1,0 +1,211 @@
+$icon-font-path: "/lib/sass-bootstrap/fonts/";
+
+@import 'sass-bootstrap/lib/bootstrap';
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+@import 'map';
+
+$border-box-sizing: true;
+$fg-gutter: 1.2em;
+$max-width: 100%;
+$red: rgb(191,41,66);
+
+body {
+    padding: 0 0 0 0;
+    overflow: hidden;
+}
+
+#container {
+    width: 100%;
+    @include outer-container;
+    overflow: hidden;
+}
+
+
+#main {
+    @include span-columns(3);
+    padding: 20px;
+    padding-right: 0;
+    padding-left: $fg-gutter;
+    h1{
+        margin-top: 0;
+        font-size: 26px;
+    };
+    max-height: 100%;
+}
+
+h2 {
+    font-size: 18px;
+    margin-top: 14px;
+    margin-bottom: 10px;
+}
+
+#extent {
+    ul {
+        font-size: 1.1em;
+    }
+}
+
+ul {
+    padding-left: 0;
+    list-style: none;
+    span.l {
+        width: 80px;
+        font-weight: 500;
+        font-size: .85em;
+        text-align: left;
+    }
+    span {
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+    }
+}
+
+.information, .info2 {
+    background-color: #eee;
+    padding: 5px 8px;
+}
+
+h3.author{
+    font-size: 14px;
+    margin-top: -8px;
+    color: #999;
+}
+
+#list {
+    ul {
+        max-height: 500px;
+        overflow-y: scroll;
+        border: 3px solid #555;
+        li {
+            &:first {
+                border-top: none;
+            }
+            padding: 3px 5px;
+            border-top: 1px solid #888;
+            cursor: pointer;
+            position: relative;
+            &:hover {
+                background-color: transparentize($red,.5);
+            }
+            &.selected {
+                background-color: $red;
+                color: white;
+            }
+            a {
+                position: absolute;
+                right: 5px;
+                padding-top:2px;
+                font-size:.9em;
+            }
+        }
+    }
+    .selected {
+        position: relative;
+        &>span {
+            line-height: 2em;
+        }
+    }
+    .btn.clear {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }  
+}
+
+#downloader {
+    margin-top: 20px;
+    button span {
+        margin-left: 5px;
+    }
+    .btn-group {
+        width: 100%;
+        ul {
+            width: 100%;
+        }
+    }
+}
+
+#map {
+    @include span-columns(9);
+}
+
+@media screen and (max-height: 950px) {
+    #list ul {
+        max-height: 400px;
+    }
+}
+
+@media screen and (max-height: 850px) {
+    #list ul {
+        max-height: 300px;
+    }
+}
+
+@media screen and (max-height: 750px) {
+    #list ul {
+        max-height: 250px;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    #list ul {
+        max-height: 200px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    #main {
+        @include span-columns(2);
+    }
+
+    #map {
+        @include span-columns(10);
+    } 
+}
+
+#extent {
+    $width: 200px;
+    $height: $width * .6;
+    $margin: 10px;
+    $in_width: $width/3;
+    $in_height: 28px;
+    .graphic {
+        width: $width;
+        height: $height;
+        position: relative;
+        &>* {
+            position: absolute;
+        }
+        .x {
+            top: $height/2 - $in_height/2;
+            &.min{
+                left: 0;
+            }
+            &.max{
+                right: 0;
+            }
+        }
+        .y {
+            left: $width/2 - $in_width/2;
+            &.min{
+                bottom: 0;
+            }
+            &.max{
+                top: 0;
+            }
+        }
+        input {
+            width: $in_width;
+        }
+    }
+    .box {
+        z-index: -10;
+        top: $in_height/2;
+        left: $in_width/2;
+        height: $height - $in_height;
+        width: $width - $in_width;
+        border: 5px solid red;
+    }
+}

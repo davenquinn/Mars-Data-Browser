@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+}
+
+.map {
+  position: relative;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+}
+
+.tile {
+  pointer-events: none;
+  position: absolute;
+  width: 256px;
+  height: 256px;
+}
+
+.info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+svg {
+  position: absolute;
+}
+
+.footprints path {
+  stroke-width: 2px;
+  stroke: rgba(191,41,66,.3);
+  fill: none;
+  &:hover{
+      stroke-width: 5px;
+      stroke: rgba(191,41,66,.7);
+      fill: rgba(191,41,66,.2);
+  }
+  &.selected {
+    fill: rgba(191,41,66,.7);
+  }
+}
+
+.attribution {
+    font-size: .9em;
+    position: absolute;
+    z-index: 500;
+    bottom:  0;
+    right: 0px;
+    padding: 0 5px;
+    background: rgba(255,255,255,.5);
+}
+
+rect.extent {
+  stroke-width: 2px;
+  stroke: white;
+  fill: none;
+}
