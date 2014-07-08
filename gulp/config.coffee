@@ -1,4 +1,4 @@
 module.exports =
     dev: "./frontend"
-    dist: "./dist"
+    dist: "./app"
     temp: "./gulp/.tmp"

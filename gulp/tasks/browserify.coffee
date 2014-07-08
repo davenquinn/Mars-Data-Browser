@@ -5,6 +5,8 @@ gulp = require("gulp")
 handleErrors = require("../util/handleErrors")
 source = require("vinyl-source-stream")
 coffeeify = require("coffeeify")
+handlebars = require('browserify-handlebars')
+
 config = require('../config')
 
 gulp.task "browserify", ->
@@ -13,13 +15,14 @@ gulp.task "browserify", ->
 		entries: ["#{config.dev}/scripts/main"]
 		extensions: [".coffee"]
 	bundler.transform(coffeeify)
+	bundler.transform(handlebars)
 
 	bundle = ->
 		bundleLogger.start()
 		bundler
 			.bundle({debug:true})
 			.on("error", handleErrors)
-			.pipe(source("app.js"))
+			.pipe(source("main.js"))
 			.pipe(gulp.dest("#{config.dist}/scripts/"))
 			.on "end", bundleLogger.end
 
