@@ -1,44 +1,44 @@
-define [
-	"jquery"
-	"backbone"
-	"handlebars"
-], ($, Backbone, Handlebars) ->
-	BaseView = Backbone.View.extend(
-		assign: (view, selector) ->
+$ = require "jquery"
+Backbone = require "backbone"
+Handlebars = require "handlebars"
 
-			#http://ianstormtaylor.com/rendering-views-in-backbonejs-isnt-always-simple/
-			view.setElement(@$(selector)).render()
-			return
+BaseView = Backbone.View.extend(
+	assign: (view, selector) ->
 
-		remove: ->
+		#http://ianstormtaylor.com/rendering-views-in-backbonejs-isnt-always-simple/
+		view.setElement(@$(selector)).render()
+		return
 
-			# Empty the element and remove it from the DOM while preserving events
-			$(@el).empty().detach()
-			this
+	remove: ->
 
-		compile: (template) ->
-			@template = Handlebars.compile(template)
-			@template
+		# Empty the element and remove it from the DOM while preserving events
+		$(@el).empty().detach()
+		this
 
-		destroy_view: ->
+	compile: (template) ->
+		@template = Handlebars.compile(template)
+		@template
 
-			#COMPLETELY UNBIND THE VIEW
-			@undelegateEvents()
-			@$el.removeData().unbind()
+	destroy_view: ->
 
-			#Remove view from DOM
-			@remove()
-			Backbone.View::remove.call this
-			return
+		#COMPLETELY UNBIND THE VIEW
+		@undelegateEvents()
+		@$el.removeData().unbind()
 
-		hide: (duration) ->
-			@$el.hide duration
-			@hidden = true
-			return
+		#Remove view from DOM
+		@remove()
+		Backbone.View::remove.call this
+		return
 
-		show: (duration) ->
-			@$el.show duration
-			@hidden = false
-			return
-	)
-	BaseView
+	hide: (duration) ->
+		@$el.hide duration
+		@hidden = true
+		return
+
+	show: (duration) ->
+		@$el.show duration
+		@hidden = false
+		return
+)
+
+module.exports = BaseView
