@@ -1,6 +1,6 @@
-$icon-font-path: "/lib/sass-bootstrap/fonts/";
+$icon-font-path: "fonts/";
 
-@import 'sass-bootstrap/lib/bootstrap';
+@import 'bootstrap-sass/assets/stylesheets/bootstrap';
 @import 'bourbon/bourbon';
 @import 'neat/neat';
 @import 'map';
@@ -111,7 +111,7 @@ h3.author{
         position: absolute;
         top: 0;
         right: 0;
-    }  
+    }
 }
 
 #downloader {
@@ -162,7 +162,7 @@ h3.author{
 
     #map {
         @include span-columns(10);
-    } 
+    }
 }
 
 #extent {
