@@ -1,2 +1,1 @@
-require("./polymaps.source")
-module.exports = org.polymaps
+module.exports = require("./polymaps.source")

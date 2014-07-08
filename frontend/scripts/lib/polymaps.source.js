@@ -2402,3 +2402,5 @@ po.stylist = function() {
   return stylist;
 };
 })(org.polymaps);
+
+module.exports = org.polymaps;

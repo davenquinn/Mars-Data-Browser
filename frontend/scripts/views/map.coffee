@@ -20,7 +20,7 @@ class Map extends BaseView
         @$el.append attr
         @setupLayer()
         @selection = new SelectControl(parent: this)
-        @listenTo @selection, "area_updated", ->
+        @listenTo @selection, "area_updated", =>
             @data = filterData(App.data.raw, @selection.extent)
             @refresh @data
             return
@@ -50,9 +50,7 @@ class Map extends BaseView
         @_map.add po.image().url(url)
         svg = d3.select("#map svg")
         @overlay = svg.insert("svg:g").attr("class", "overlay")
-        return
 
-    pathfinder: ->
         ns = this
         projectPoint = (x, y) ->
             d = ns._map.locationPoint
@@ -60,25 +58,27 @@ class Map extends BaseView
                 lat: y
             @stream.point d.x, d.y
 
-        d3.geo.path().projection d3.geo.transform(point: projectPoint)
+        @pathfinder = d3.geo.path()
+            .projection d3.geo.transform(point: projectPoint)
 
-    refresh: (data) ->
+    refresh: (data) =>
         self = this
-        @features = @footprints.selectAll("path").data(data.features, (d) ->
-            d.id
-        )
-        @features.enter().append("path").attr("d", @pathfinder).on "click", (d) ->
-            d.selected = (if d.selected then false else true)
-            self.updateSelection()
-            self.trigger "selection_updated"
-            return
+        @features = @footprints.selectAll("path")
+            .data data.features, (d) -> d.id
+
+        @features.enter()
+            .append("path")
+                .attr("d", @pathfinder)
+                .on "click", (d) =>
+                    d.selected = (if d.selected then false else true)
+                    @updateSelection()
+                    @trigger "selection_updated"
 
         @features.exit().remove()
         @updateSelection()
 
     setupLayer: ->
 
-        #bounds = this.pathfinder.bounds(data);
         reset = -> self.features.attr "d", self.pathfinder
         self = this
         @footprints = @overlay.append("g").attr("class", "footprints")

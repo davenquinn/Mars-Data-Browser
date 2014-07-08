@@ -1,8 +1,9 @@
 $ = require "jquery"
 Backbone = require "backbone"
-Handlebars = require "handlebars"
+Backbone.$ = $
 
-BaseView = Backbone.View.extend(
+BaseView = Backbone.View.extend
+
 	assign: (view, selector) ->
 
 		#http://ianstormtaylor.com/rendering-views-in-backbonejs-isnt-always-simple/
@@ -39,6 +40,5 @@ BaseView = Backbone.View.extend(
 		@$el.show duration
 		@hidden = false
 		return
-)
 
 module.exports = BaseView

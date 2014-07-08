@@ -4,7 +4,7 @@ moment = require "moment"
 template = require "./template.html"
 pds_template = require "./pds_file.hbs"
 
-$ = require "jquery"
+window.jQuery = require "jquery"
 require "bootstrap-sass/assets/javascripts/bootstrap/dropdown"
 
 class Downloader extends BaseView

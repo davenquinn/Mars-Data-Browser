@@ -2,10 +2,10 @@ d3 = require "d3"
 BaseView = require "../base"
 template = require "./template.html"
 
-class ExtentControl extends BaseView
+ExtentControl = BaseView.extend
     initialize: ->
         self = this
-        @compile template
+        @template = template
         @render()
         @expanded = false
         @f = d3.format(".3f")

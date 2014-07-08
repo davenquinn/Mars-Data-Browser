@@ -1,9 +1,11 @@
 $ = require "jquery"
 startApp = require "./app"
 
+window.jQuery = $
+
 $("body").append "<img class='loading' src='images/ajax-loader.gif' />"
 $.ajax
-    url: "data/data.json"
+    url: "data.json"
     dataType: "json"
     success: startApp
     error: (request, textStatus, errorThrown) ->
