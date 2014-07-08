@@ -3,6 +3,9 @@
 
 node_modules
 .sass-cache
-app/bower_components
+
+app/scripts
+app/styles
+app/data.json
 
 data/raw
