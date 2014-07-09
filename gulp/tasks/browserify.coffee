@@ -6,10 +6,12 @@ handleErrors = require("../util/handleErrors")
 source = require("vinyl-source-stream")
 coffeeify = require("coffeeify")
 handlebars = require('browserify-handlebars')
+uglifyify = require('uglifyify')
 
 config = require('../config')
 
 gulp.task "browserify", ->
+	debug = true
 	bundleMethod = (if global.isWatching then watchify else browserify)
 	bundler = bundleMethod
 		entries: ["#{config.dev}/scripts/main"]
@@ -17,10 +19,14 @@ gulp.task "browserify", ->
 	bundler.transform(coffeeify)
 	bundler.transform(handlebars)
 
+	if global.isDist
+		debug = false
+		bundler.transform(uglifyify)
+
 	bundle = ->
 		bundleLogger.start()
 		bundler
-			.bundle({debug:true})
+			.bundle({debug:debug})
 			.on("error", handleErrors)
 			.pipe(source("main.js"))
 			.pipe(gulp.dest("#{config.dist}/scripts/"))
