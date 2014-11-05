@@ -1,33 +1,45 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import os
 import json
 
 import fiona
-from shapely.geometry import shape, mapping
+from pathlib import Path
+from pandas import read_table
 
-__dir__ = os.path.dirname(os.path.realpath(__file__))
+directory = Path(".")
+df = read_table(str(directory/"stereo-pairs.txt"), sep=r"\s*")
+
+import IPython; IPython.embed()
+
+def stereo_geometry(fid):
+	d = df[df.Left == fid]
+	a = len(d)
+	if a > 0:
+		assert a == 1
+
+	return True
+
+
+
 
 def import_data():
-	data_dir = os.path.join(__dir__,"raw")
-	files =  [a for a in os.listdir(data_dir) if os.path.splitext(a)[1] == ".shp"]
-	for fname in [files[0]]:
-		with fiona.open(os.path.join(data_dir,fname), "r") as f:
+
+	data_dir = directory/"raw"
+	for fname in data_dir.glob("*.shp"):
+		with fiona.open(str(fname), "r") as f:
 			for i,feature in enumerate(f):
-				if i%1000==0: print i
-				geom = shape(feature["geometry"])
-				if not geom.is_valid:
-					print "Invalid Geometry"
-					continue
-
+				fid = feature["properties"]["ProductId"]
+				if i%1000==0: print(fid)
+				stereo = stereo_geometry(fid)
 				coords = feature["geometry"]["coordinates"][0]
-
-				yield {
-					"c": coords[0:-1], # Don't need closure, we can add this after the fact
-					"i": feature["properties"]["ProductId"]
-				}
+				yield dict(
+					c=coords[0:-1], # Don't need closure, we can add this after the fact
+					i=fid)
 
 collection = list(import_data())
 
-with open(os.path.join(__dir__,"data.json"),"w") as outfile:
-	outfile.write(json.dumps(collection, allow_nan=False))
+with open(str(directory/"data.json"),"w") as f:
+	json.dump(collection, f, allow_nan=False)
