@@ -5,35 +5,46 @@ gulp = require("gulp")
 handleErrors = require("../util/handleErrors")
 source = require("vinyl-source-stream")
 coffeeify = require("coffeeify")
-handlebars = require('browserify-handlebars')
-uglifyify = require('uglifyify')
-
+hbsfy = require("hbsfy").configure
+	extensions: ["html", "hbs"]
 config = require('../config')
+chalk = require "chalk"
 
-gulp.task "browserify", ->
-	debug = true
-	bundleMethod = (if global.isWatching then watchify else browserify)
-	bundler = bundleMethod
-		entries: ["#{config.dev}/scripts/main"]
+setupEndpoint = (name,location,watching=false) ->
+	console.log "[#{chalk.blue("Browserify")}] #{location} ➔ #{config.dist}/scripts/#{name}.min.js"
+
+	bundler = browserify
+		entries: [location]
 		extensions: [".coffee"]
-	bundler.transform(coffeeify)
-	bundler.transform(handlebars)
+		debug: (if global.dist then false else true)
+    #cache: {}
+    #packageCache: {}
+    #fullPaths: true
 
-	if global.isDist
-		debug = false
-		bundler.transform(uglifyify)
+	if watching
+		bundler = watchify(bundler)
+
+	bundler.transform coffeeify
+	bundler.transform hbsfy
+
+	if global.dist
+		bundler.transform {global: true}, 'uglifyify'
 
 	bundle = ->
 		bundleLogger.start()
-		bundler
-			.bundle({debug:debug})
+		bundler.bundle()
 			.on("error", handleErrors)
-			.pipe(source("main.js"))
-			.pipe(gulp.dest("#{config.dist}/scripts/"))
 			.on "end", bundleLogger.end
-
+			.pipe(source("#{name}.min.js"))
+			.pipe(gulp.dest("#{config.dist}/scripts/"))
 
 	# Rebundle with watchify on changes
-	if global.isWatching
+	if watching
 		bundler.on "update", bundle
 	bundle()
+
+gulp.task "browserify", ->
+	setupEndpoint("main", config.dev+"/scripts/main", false)
+
+gulp.task "watchify", ->
+	setupEndpoint("main", config.dev+"/scripts/main", true)
