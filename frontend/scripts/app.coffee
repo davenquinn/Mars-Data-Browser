@@ -3,7 +3,7 @@ Views = require "./views"
 createBbox = require "./util/bbox"
 
 startApp = (data) ->
-  $(".loading").hide()
+  $("#preloader").hide()
   window.App =
     state: {}
 
