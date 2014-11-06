@@ -7,6 +7,5 @@ node_modules
 
 app/scripts
 app/styles
-app/data.json
+app/data
 
-data/raw
