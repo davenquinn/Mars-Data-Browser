@@ -4,41 +4,41 @@ Backbone.$ = $
 
 BaseView = Backbone.View.extend
 
-	assign: (view, selector) ->
+  assign: (view, selector) ->
 
-		#http://ianstormtaylor.com/rendering-views-in-backbonejs-isnt-always-simple/
-		view.setElement(@$(selector)).render()
-		return
+    #http://ianstormtaylor.com/rendering-views-in-backbonejs-isnt-always-simple/
+    view.setElement(@$(selector)).render()
+    return
 
-	remove: ->
+  remove: ->
 
-		# Empty the element and remove it from the DOM while preserving events
-		$(@el).empty().detach()
-		this
+    # Empty the element and remove it from the DOM while preserving events
+    $(@el).empty().detach()
+    this
 
-	compile: (template) ->
-		@template = Handlebars.compile(template)
-		@template
+  compile: (template) ->
+    @template = Handlebars.compile(template)
+    @template
 
-	destroy_view: ->
+  destroy_view: ->
 
-		#COMPLETELY UNBIND THE VIEW
-		@undelegateEvents()
-		@$el.removeData().unbind()
+    #COMPLETELY UNBIND THE VIEW
+    @undelegateEvents()
+    @$el.removeData().unbind()
 
-		#Remove view from DOM
-		@remove()
-		Backbone.View::remove.call this
-		return
+    #Remove view from DOM
+    @remove()
+    Backbone.View::remove.call this
+    return
 
-	hide: (duration) ->
-		@$el.hide duration
-		@hidden = true
-		return
+  hide: (duration) ->
+    @$el.hide duration
+    @hidden = true
+    return
 
-	show: (duration) ->
-		@$el.show duration
-		@hidden = false
-		return
+  show: (duration) ->
+    @$el.show duration
+    @hidden = false
+    return
 
 module.exports = BaseView
