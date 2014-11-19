@@ -11,7 +11,7 @@ config = require('../config')
 chalk = require "chalk"
 
 setupEndpoint = (name,location,watching=false) ->
-	console.log "[#{chalk.blue("Browserify")}] #{location} ➔ #{config.dist}/scripts/#{name}.min.js"
+	console.log "[#{chalk.blue("Browserify")}] #{location} ➔ #{config.dist}/scripts/#{name}.js"
 
 	bundler = browserify
 		entries: [location]
@@ -35,7 +35,7 @@ setupEndpoint = (name,location,watching=false) ->
 		bundler.bundle()
 			.on("error", handleErrors)
 			.on "end", bundleLogger.end
-			.pipe(source("#{name}.min.js"))
+			.pipe(source("#{name}.js"))
 			.pipe(gulp.dest("#{config.dist}/scripts/"))
 
 	# Rebundle with watchify on changes

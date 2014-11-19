@@ -1,32 +1,42 @@
-#preloader{
+$margin: 2em;
+
+#preloader-bars{
+    width: 4em;
+    margin: 2em auto;
+    text-align: center;
     position:relative;
-    width:30px;
-    height:30px;
-    background:#3498db;
-    border-radius:50px;
-    animation: preloader 1.5s infinite linear;
+    margin-bottom: 3em;
 }
-#preloader:after{
+#preloader-bars span{
+    display:block;
+    bottom:0px;
+    width: 9px;
+    height: 5px;
+    background:#9b59b6;
     position:absolute;
-    width:50px;
-    height:50px;
-    border-top:10px solid #9b59b6;
-    border-bottom:10px solid #9b59b6;
-    border-left:10px solid transparent;
-    border-right:10px solid transparent;
-    border-radius:50px;
-    content:'';
-    top:-20px;
-    left:-20px;
-    animation: preloader_after 1.5s infinite linear;
+    animation: preloader_bars 1.5s  infinite ease-in-out;
 }
-@keyframes preloader {
-    0% {transform: rotate(0deg);}
-    50% {transform: rotate(180deg);background:#2ecc71;}
-    100% {transform: rotate(360deg);}
+ 
+#preloader-bars span:nth-child(2){
+left:11px;
+animation-delay: .2s;
+ 
 }
-@keyframes preloader_after {
-    0% {border-top:10px solid #9b59b6;border-bottom:10px solid #9b59b6;}
-    50% {border-top:10px solid #3498db;border-bottom:10px solid #3498db;}
-    100% {border-top:10px solid #9b59b6;border-bottom:10px solid #9b59b6;}
+#preloader-bars span:nth-child(3){
+left:22px;
+animation-delay: .4s;
+}
+#preloader-bars span:nth-child(4){
+left:33px;
+animation-delay: .6s;
+}
+#preloader-bars span:nth-child(5){
+left:44px;
+animation-delay: .8s;
+}
+@keyframes preloader_bars {
+    0% {height:5px;transform:translateY(0px);background:#9b59b6;}
+    25% {height:30px;transform:translateY(15px);background:#3498db;}
+    50% {height:5px;transform:translateY(0px);background:#9b59b6;}
+    100% {height:5px;transform:translateY(0px);background:#9b59b6;}
 }

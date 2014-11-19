@@ -2,8 +2,8 @@ d3 = require "d3"
 
 # Calculates minimum axis-aligned bounding box and saves for later use
 createBounds = (data) ->
-  lat = (coord) -> coord[1]
-  lon = (coord) -> coord[0]
+  lat = (c)->c[1]
+  lon = (c)->c[0]
   bbox = (a) ->
     a.b = [
       [d3.min(a.c, lon),d3.min(a.c, lat)]

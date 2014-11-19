@@ -1,13 +1,11 @@
 $ = require "jquery"
-startApp = require "./app"
-
 window.jQuery = $
+Spine = require "spine"
+require "spine/lib/route"
+Spine.jQuery = $
 
-$("body").append "<div id='preloader'></div>"
-$.ajax
-    url: "data/ctx.json"
-    dataType: "json"
-    success: startApp
-    error: (request, textStatus, errorThrown) ->
-        console.log textStatus
-        console.log errorThrown
+App = require "./app"
+
+window.app = new App
+
+Spine.Route.setup()

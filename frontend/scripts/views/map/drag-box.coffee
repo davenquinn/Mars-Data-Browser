@@ -1,13 +1,14 @@
 d3 = require "d3"
-BaseView = require "./base"
+Spine = require "spine"
 
-class SelectControl extends BaseView
-  initialize: (options) ->
+class ExtentControl extends Spine.Controller
+  enabled: false
+  constructor: ->
+    super
     @extent = null
     @active = false
     @selection = null
-    @map = options.parent
-    @_map = @map._map
+    @poly = @map.poly
 
     @container = @map.overlay
       .append("g")
@@ -15,7 +16,7 @@ class SelectControl extends BaseView
           class: "selection_container"
           "pointer-events": "all"
 
-    @_map.on "move", (e) => @reset()
+    @poly.on "move", (e) => @reset()
 
     d3.select("body")
       .on "keydown", => @enable() if d3.event.shiftKey
@@ -25,24 +26,25 @@ class SelectControl extends BaseView
     return unless @selection?
     @selection.attr "d", @pathfinder
 
-  enabled: false
+  onBrush: =>
+    @trigger "changed", @brush.extent()
+
   enable: =>
-    console.log "Enabled"
-    @onBrush = =>
-      f = d3.format(".3f")
-      e = @control.extent()
-      window.App.extent.onBrush e
+    @log "Enabled"
+      #window.App.extent.onBrush e
 
     if @selection?
       @selection.remove()
       @selection = null
 
-    @drag = @container.append("g").attr("class", "brush")
+    @drag = @container
+      .append("g")
+      .attr("class", "brush")
     @drag.select("rect.background")
       .style "cursor", "crosshair"
 
 
-    extent = @_map.extent()
+    extent = @poly.extent()
 
     xscale = d3.scale.linear()
       .domain [extent[0].lon, extent[1].lon]
@@ -51,19 +53,19 @@ class SelectControl extends BaseView
       .domain [extent[0].lat,extent[1].lat]
       .range [@map.$el.height(), 0]
 
-    @control = d3.svg.brush()
+    @brush = d3.svg.brush()
       .x(xscale)
       .y(yscale)
       .on("brush", @onBrush)
 
-    @control.extent(@extent) if @extent?
-    @drag.call @control
+    @brush.extent(@extent) if @extent?
+    @drag.call @brush
 
     @enabled = true
 
   disable: =>
     @drag.remove()
-    ex = @control.extent()
+    ex = @brush.extent()
     @geom =
       type: "Polygon"
       coordinates: [[
@@ -85,7 +87,7 @@ class SelectControl extends BaseView
 
     unless same(@extent, ex)
       @extent = ex
-      @trigger "area_updated"
+      @trigger "updated", ex
     return
 
-module.exports = SelectControl
+module.exports = ExtentControl

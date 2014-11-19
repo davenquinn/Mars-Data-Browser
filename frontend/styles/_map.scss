@@ -24,6 +24,10 @@ body {
   left: 10px;
 }
 
+.datasets {
+  li { margin-bottom: 1em;}
+}
+
 svg {
   position: absolute;
   height: 100vh;
@@ -34,12 +38,12 @@ svg {
   stroke-width: 2px;
   stroke: rgba(191,41,66,.3);
   fill: none;
-  &:hover{
+  &.hovered{
       stroke-width: 5px;
       stroke: rgba(191,41,66,.7);
-      fill: rgba(191,41,66,.2);
-  }
+      fill: rgba(191,41,66,.7);  }
   &.selected {
+    stroke: darken(rgba(191,41,66,.7), 20%);
     fill: rgba(191,41,66,.7);
   }
 }

@@ -12,23 +12,20 @@ gulp.task "browserSync", ->
 		baseDir: config.dist
 
 gulp.task "copy", ->
-  data_dir = config.dist+"/data/"
-  mkdirp data_dir
-  gulp.src "#{config.root}/data/build/*"
-    .pipe gulp.dest(data_dir)
   gulp.src config.root+"/node_modules/bootstrap-sass/assets/fonts/bootstrap/*"
     .pipe gulp.dest(config.dist+"/styles/fonts")
 
 gulp.task "watch", ["watchify","browserSync"], ->
-	gulp.watch "#{config.dev}/styles/**", ["sass"]
+	gulp.watch "#{config.dev}/styles/**", ["compass"]
 
 gulp.task 'setDist', ->
     global.isDist = true
+    global.dist = true
 
 gulp.task "build", [
   "copy"
   "browserify"
-  "sass"
+  "compass"
 ]
 
 gulp.task 'default', [
@@ -45,5 +42,5 @@ gulp.task "dist", [
     "setDist"
     "copy"
     "browserify"
-    "sass"
+    "compass"
 ]

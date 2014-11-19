@@ -13,5 +13,5 @@ print = (data)->
     console.log prefix+" "+data
 
 gulp.task "upload", ["dist"], ->
-    child = exec "rsync -av --delete #{config.dist}/ lewis:www/ctx", (e,stdout) ->
+    child = exec "rsync -av --delete #{config.dist}/ lewis:www/mars-data", (e,stdout) ->
         print stdout

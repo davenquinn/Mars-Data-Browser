@@ -9,9 +9,12 @@ import click
 import fiona
 from shapely.geometry import shape, mapping
 from subprocess import call
-from itertools import chain
+from itertools import chain, product
 
-coverages = dict(ctx=["edr"],hirise=["rdr","rdrv11"])
+coverages = dict(
+    ctx=["edr"],
+    hirise=["rdr","rdrv11"],
+    crism=["trdr"])
 baseurl = "http://ode.rsl.wustl.edu/mars/coverageshapefiles/mars/mro/{inst}/{dsid}/{file}.tar.gz"
 basename = "mars_mro_{inst}_{dsid}_c{lon}a"
 
@@ -25,15 +28,17 @@ def run(command):
     call(command, shell=True)
 
 def urls():
+    """ Generates URLs for PDS coverage files
+    """
     for inst,types in coverages.items():
-        for dsid in types:
-            for lon in [0,180]:
-                info = dict(inst=inst,dsid=dsid,lon=lon)
-                yield baseurl.format(
-                    file=basename.format(**info),
-                    **info)
+        for dsid, lon in product(types, [0,180]):
+            info = dict(inst=inst,dsid=dsid,lon=lon)
+            yield baseurl.format(
+                file=basename.format(**info),
+                **info)
 
 def download_files():
+    click.secho("Downloading data", fg="green")
     run("rm -f {}*".format(datadir))
     for url in urls():
         c = "curl {url} | tar -xz -C {d}"
@@ -46,16 +51,24 @@ def import_data(inst,dsid):
             for i,feature in enumerate(f):
                 if i%10000==0:
                     click.echo("{0}...".format(i),nl=False)
+                fid = feature["properties"]["ProductId"]
+
+                if inst == "hirise" and not fid.endswith("RED"):
+                    continue
+
                 geom = shape(feature["geometry"])
                 if not geom.is_valid:
                     click.secho("Invalid Geometry",fg="red")
                     continue
 
+                #if inst == "crism":
+                #    import IPython; IPython.embed()
+
                 coords = feature["geometry"]["coordinates"][0]
 
                 yield dict(
-                    c=coords[0:-1], # Don't need closure, we can add this after the fact
-                    i=feature["properties"]["ProductId"])
+                    c=coords[0:-1], # Don't need closure, we can add this on client-side
+                    i=fid)
             click.echo(i)
 
 @click.group()
@@ -67,9 +80,11 @@ def regenerate():
     """Regenerate data files"""
     for inst, types in coverages.items():
         echo("Importing {} data".format(inst))
+
         iterators = (import_data(inst,d) for d in types)
         collection = list(chain(*iterators))
-        fn = os.path.join(__dir__,"build",inst+".json")
+        fn = os.path.join(__dir__,"..","app","data",inst+".json")
+
         with open(fn,"w") as outfile:
             json.dump(collection, outfile, allow_nan=False)
         echo("{0} features written".format(len(collection)))
