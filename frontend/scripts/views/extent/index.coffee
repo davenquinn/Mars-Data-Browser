@@ -30,7 +30,7 @@ class ExtentControl extends Spine.Controller
 
   expand: ->
     @expanded = true
-    @$("h2").text "Map area"
+    @$("h2").html "Selected area"# <button class='btn btn-small btn-default zoom-to'>Fit</button>"
     @$(".information").hide 400
     @$(".extent").show 400
     @$(".info2").show 400

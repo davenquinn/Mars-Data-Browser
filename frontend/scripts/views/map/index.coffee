@@ -1,6 +1,6 @@
 d3 = require "d3"
 Spine = require "spine"
-
+$ = require "jquery"
 po = require "../../lib/polymaps"
 ExtentControl = require "./drag-box"
 attribution = require "./attribution.html"
@@ -16,7 +16,13 @@ class Map extends Spine.Controller
     self = this
     @createMap()
     @$el.append attribution
-    @bbox = new ExtentControl map: @
+
+    @footprints = @overlay.append("g").attr("class", "footprints")
+
+    i = @overlay.append("g")
+    @bbox = new ExtentControl
+      map: @
+      el: $(i[0])
 
   addData: (@data)=>
     throw "@data required" unless @data
@@ -33,7 +39,6 @@ class Map extends Spine.Controller
     @poly.on "move", @resetView
 
   setupLayer: =>
-    @footprints = @overlay.append("g").attr("class", "footprints")
     @refresh []
 
   createMap: ->
@@ -66,7 +71,7 @@ class Map extends Spine.Controller
         lat: y
       @stream.point d.x, d.y
 
-    @pathfinder = d3.geo.path()
+    @path = d3.geo.path()
       .projection d3.geo.transform(point: projectPoint)
 
   refresh: (features=[]) =>
@@ -76,14 +81,14 @@ class Map extends Spine.Controller
 
     @features.enter()
       .append("path")
-        .attr("d", @pathfinder)
+        .attr("d", @path)
         .on "click", @data.updateSelection
         .on "mouseover", @data.toggleHovered
         .on "mouseout", @data.toggleHovered
     @features.exit().remove()
     @updateSelection()
 
-  resetView: => @features.attr "d", @pathfinder
+  resetView: => @features.attr "d", @path
 
   updateSelection: =>
     @features.classed "selected", (d)->d.selected
