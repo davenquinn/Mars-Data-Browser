@@ -100,4 +100,9 @@ class Map extends Spine.Controller
   onHovered: =>
     @features.classed "hovered", (d)->d.hovered
 
+  zoomTo: (e)=>
+    @log "Setting zoom level"
+    e = e.map (d)=>{lon:d[0],lat: d[1]}
+    @poly.extent e
+
 module.exports = Map

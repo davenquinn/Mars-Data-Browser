@@ -58,8 +58,15 @@ svg {
     background: rgba(255,255,255,.5);
 }
 
-rect.extent {
-  stroke-width: 2px;
-  stroke: white;
-  fill: none;
+g.brush {
+    rect.extent {
+      stroke-width: 2px;
+      stroke: white;
+      fill: none;
+    }
+    &.disabled {
+      rect.extent {
+        stroke: transparentize(white, 0.5);
+      }
+    }
 }

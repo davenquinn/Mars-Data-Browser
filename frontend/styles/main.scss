@@ -56,19 +56,18 @@ h2 {
 #extent {
     ul {
         font-size: 1.1em;
+      span.l {
+          width: 80px;
+          font-weight: 500;
+          font-size: .85em;
+          text-align: left;
+      }
+      span {
+          display: inline-block;
+          width: 60px;
+          text-align: right;
+      }
     }
-    span.l {
-        width: 80px;
-        font-weight: 500;
-        font-size: .85em;
-        text-align: left;
-    }
-    span {
-        display: inline-block;
-        width: 60px;
-        text-align: right;
-    }
-
 }
 
 ul {

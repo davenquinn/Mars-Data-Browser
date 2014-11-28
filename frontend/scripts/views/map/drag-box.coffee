@@ -1,81 +1,83 @@
 d3 = require "d3"
 Spine = require "spine"
 
-enable = 
-
 class ExtentControl extends Spine.Controller
   enabled: false
   constructor: ->
     super
     @_el = d3.select @el[0]
-
-    @extent = null
-    @poly = @map.poly
-
-
-    @_el.attr
-      class: "selection_container"
-      "pointer-events": "all"
+      .attr class: "selection_container"
 
     @drag = @_el
       .append("g")
       .attr class: "brush disabled"
 
-    @brush = false
-    @poly.on "move", @reset
+    @brush = d3.svg.brush()
+
+    xscale = d3.scale.linear()
+      .domain [0, @map.$el.width()]
+      .range [0, @map.$el.width()]
+    yscale = d3.scale.linear()
+      .domain [0,@map.$el.height()]
+      .range [0,@map.$el.height()]
+
+    @brush
+      .x(xscale)
+      .y(yscale)
+      .on "brush", @onBrush
+
+    @drag.call @brush
+    @disable()
+
+    @map.poly.on "move", @reset
 
     d3.select("body")
       .on "keydown", => @enable() if d3.event.shiftKey
       .on "keyup", => @disable() if d3.event.keyIdentifier is "Shift"
 
   reset: (e)=>
-    unless @brush
-      return
-    @log "Refreshing bounding box"
-    ex = @poly.extent()
-
-    xscale = d3.scale.linear()
-      .domain [ex[0].lon, ex[1].lon]
-      .range [0, @map.$el.width()]
-    yscale = d3.scale.linear()
-      .domain [ex[0].lat,ex[1].lat]
-      .range [@map.$el.height(), 0]
-
-    @brush
-      .x(xscale)
-      .y(yscale)
-    @brush.extent(@extent) if @extent?
+    if @extent?
+      ex = @extent.map @unproject
+      @brush.extent ex
     @drag.call @brush
 
   onBrush: =>
-    @trigger "changed", @brush.extent()
+    ex = @brush.extent()
+    @trigger "changed", @project ex
 
   enable: =>
-    @log "Brush Enabled"
-    @brush = d3.svg.brush() unless @brush
-
-    @drag.attr "pointer-events": "all"
-    @drag.selectAll("rect")
+    @drag
+      .attr class: "brush enabled"
       .style "pointer-events": "all"
-
-    @brush.on "brush", @onBrush
-
+      .selectAll "rect"
+        .style "pointer-events": "all"
     @reset()
 
+  project: (ex)=>
+    ex.map (p)=>
+      o = @map.poly.pointLocation x: p[0], y: p[1]
+      [o.lon, o.lat]
+
+  unproject: (c)=>
+    o = @map.poly.locationPoint lon: c[0], lat: c[1]
+    [o.x, o.y]
+
   disable: =>
-    return unless @brush
-    @log "Disabled"
-    @drag.on "brush", null
-    @drag.style "pointer-events": "none"
+    @drag
+      .attr class: "brush disabled"
+      .style "pointer-events": "none"
       .selectAll "rect"
         .style "pointer-events": "none"
 
     ex = @brush.extent()
 
     return unless ex
-    if ex[0] == ex[1]
-      @brush = false
-      @trigger "updated", false
+    if ex[0][0] == ex[1][0]
+      @log "No extent selected"
+      @extent = null
+      #@brush = false
+      @trigger "updated", @extent
+      return
 
     same = (a, b) ->
       return false if not a
@@ -86,11 +88,10 @@ class ExtentControl extends Spine.Controller
       true
 
     @log ex
-
+    ex = @project ex
     return if same(@extent, ex)
 
-
     @extent = ex
-    @trigger "updated", ex
+    @trigger "updated", @extent
 
 module.exports = ExtentControl

@@ -23,7 +23,11 @@ class DataManager extends Spine.Module
     @total = @footprints.length
 
   updateExtent: (extent)=>
-    @features = filter @footprints, extent
+    console.log "Updating extent for data selection"
+    if extent
+      @features = filter @footprints, extent
+    else
+      @features = []
     @trigger "updated", @features
 
   raw: createBounds
