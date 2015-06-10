@@ -13,8 +13,8 @@ from itertools import chain, product
 
 coverages = dict(
     ctx=["edr"],
-    hirise=["rdr","rdrv11"],
-    crism=["trdr"])
+    hirise=["rdr","rdrv11"])#,
+    #crism=["trdr"])
 baseurl = "http://ode.rsl.wustl.edu/mars/coverageshapefiles/mars/mro/{inst}/{dsid}/{file}.tar.gz"
 basename = "mars_mro_{inst}_{dsid}_c{lon}a"
 
@@ -61,8 +61,9 @@ def import_data(inst,dsid):
                     click.secho("Invalid Geometry",fg="red")
                     continue
 
-                #if inst == "crism":
-                #    import IPython; IPython.embed()
+                if inst == "hirise":
+                    import IPython; IPython.embed()
+                    raise
 
                 coords = feature["geometry"]["coordinates"][0]
 
