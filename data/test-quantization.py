@@ -6,7 +6,7 @@ accuracy implied by quantizations of different levels using a different
 planetary radius.
 https://github.com/mbostock/topojson/wiki/Command-Line-Reference#quantization
 
-Usage: quantization.py [LEVEL]
+Usage: test-quantization.py [LEVEL]
 
 Arguments:
 	LEVEL        The level of quantization to test [default: 1e4]
@@ -38,5 +38,5 @@ def printer():
 	for i in zip(d,q):
 		yield "{0:.0f}m ({1:.5f}º)".format(*i)
 
-print "quantization (adjusted with radius of {0:.0f}m): {1} {2}".format(Mars_radius,*tuple(printer()))
+print("quantization (adjusted with radius of {0:.0f}m): {1} {2}".format(Mars_radius,*tuple(printer())))
 

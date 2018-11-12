@@ -81,7 +81,7 @@ def cli():
     pass
 
 @cli.command()
-def regenerate():
+def update():
     """Regenerate data files"""
     for inst, types in coverages.items():
         echo("Importing {} data".format(inst))
@@ -95,7 +95,7 @@ def regenerate():
         echo("{0} features written".format(len(collection)))
 
 @cli.command()
-def update():
+def create():
     """Downloads and generates data files"""
     download_files()
     regenerate()
