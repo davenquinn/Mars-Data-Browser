@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -- coding:utf8 -*-
 """
-This program assists with the usage of topojson by testing the accuracy implied by quantizations of different levels, for Mars!
+This script supports the usage of topojson on Mars by testing the
+accuracy implied by quantizations of different levels using a different
+planetary radius.
 https://github.com/mbostock/topojson/wiki/Command-Line-Reference#quantization
 
 Usage: quantization.py [LEVEL]

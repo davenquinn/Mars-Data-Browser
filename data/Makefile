@@ -1,7 +1,7 @@
 all: geojson topojson copy
 
 geojson:
-	./make_geojson.py
+	./make_json.py
 
 topojson:
 	topojson -q 1e5 -o ctx.json -- data.json

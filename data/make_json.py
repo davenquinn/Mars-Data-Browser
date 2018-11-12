@@ -3,13 +3,17 @@
 Downloads and imports coverage data for CTX and HiRISE
 """
 
+# Standard library imports
 import os
 import json
+from subprocess import call
+from itertools import chain, product
+
+# External modules
 import click
 import fiona
 from shapely.geometry import shape, mapping
-from subprocess import call
-from itertools import chain, product
+
 
 coverages = dict(
     ctx=["edr"],
