@@ -5,6 +5,7 @@ Map = require "../views/map"
 DataManager = require "./data"
 ExtentControl = require "../views/extent"
 DataBrowser = require "../views/browser"
+{createCTXMosaicData} = require "./ctx-global"
 {compile} = require 'handlebars'
 
 options = require "./options"
@@ -41,6 +42,7 @@ class App extends Spine.Controller
       "/": => @setupOrigin()
       "/hirise": => @prepareDataset options.datasets.HiRISE
       "/ctx": => @prepareDataset options.datasets.CTX
+      "/ctx-global": => @prepareCTXMosaic()
 
     @extent = new ExtentControl
       el: @$ "#extent"
@@ -72,6 +74,17 @@ class App extends Spine.Controller
           @$("#preloader-bars").remove()
           @_browser.append "<p class='error'>There
             was an error: #{textStatus}</p>"
+
+  prepareCTXMosaic: =>
+    ds = {name: "CTX global mosaic", id: 'ctx-global'}
+
+    @$("#info").hide 300
+    @title.set ds.name
+    if not @data[ds.id]?
+      rawData = createCTXMosaicData()
+      @data[ds.id] = new DataManager ds, rawData
+    @_browser.empty()
+    @viewDataset ds
 
   viewDataset: (ds)=>
     @log "Preparing dataset for viewing"

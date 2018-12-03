@@ -4,4 +4,4 @@ cd "$(git rev-parse --show-toplevel)"
 mkdir -p dist
 rm -f dist/*
 cp -r data/build dist/data
-parcel build --public-url '.' frontend/index.html
+parcel build --public-url './' frontend/index.html
