@@ -3,6 +3,7 @@ Spine = require "spine"
 moment = require "moment"
 template = require "./template.html"
 {compile} = require 'handlebars'
+download = require 'downloadjs'
 
 pds_template = compile """
 #Date Report Generated: {{date}}
@@ -61,9 +62,7 @@ class Downloader extends Spine.Controller
     @download "#{@data.dataset.id}_footprints.txt", text
 
   download: (filename, text) ->
-    pom = document.createElement("a")
-    pom.setAttribute "href", "data:text/plain;charset=utf-8," + encodeURIComponent(text)
-    pom.setAttribute "download", filename
-    pom.click()
+    console.log "Downloading #{filename}"
+    download(text, filename, 'text/plain')
 
 module.exports = Downloader
