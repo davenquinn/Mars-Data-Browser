@@ -8,9 +8,17 @@ $fg-gutter: 1.2em;
 $max-width: 100%;
 $red: rgb(191,41,66);
 
+* {
+  box-sizing: border-box;
+}
+
 body {
     padding: 0 0 0 0;
     overflow: hidden;
+}
+
+svg {
+  shape-rendering: crisp-edges;
 }
 
 #container {
