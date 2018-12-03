@@ -1,12 +1,12 @@
 
 createCTXMosaicData = ->
   __ = []
-  for a in [-90..90]
-    for b in [-44...44]
-      x0 = a*2
-      y0 = b*2
+  for a in [-45..45]
+    for b in [-22...22]
+      x0 = a*4
+      y0 = b*4
       i = "E#{x0}_N#{y0}.zip"
-      c = [[x0,y0],[x0+2,y0],[x0+2,y0+2],[x0,y0+2]]
+      c = [[x0,y0],[x0+4,y0],[x0+4,y0+4],[x0,y0+4]]
       __.push({i,c})
   return __
 
