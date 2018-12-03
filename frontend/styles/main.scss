@@ -1,6 +1,3 @@
-$icon-font-path: "fonts/";
-
-@import 'bootstrap-sass/assets/stylesheets/bootstrap';
 @import 'bourbon/bourbon';
 @import 'neat/neat';
 @import 'map';
@@ -11,9 +8,17 @@ $fg-gutter: 1.2em;
 $max-width: 100%;
 $red: rgb(191,41,66);
 
+* {
+  box-sizing: border-box;
+}
+
 body {
     padding: 0 0 0 0;
     overflow: hidden;
+}
+
+svg {
+  shape-rendering: crisp-edges;
 }
 
 #container {

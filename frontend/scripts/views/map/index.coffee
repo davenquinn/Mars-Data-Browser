@@ -7,7 +7,7 @@ attribution = require "./attribution.html"
 
 class Map extends Spine.Controller
   constructor: ->
-    super
+    super arguments...
     @render()
     @_focused = null
     @bboxActive = false

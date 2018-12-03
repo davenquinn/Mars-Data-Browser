@@ -1,13 +1,20 @@
 d3 = require "d3"
 Spine = require "spine"
 template = require "./template.html"
-listItem = require "./list-item.html"
+{compile} = require 'handlebars'
 
 f = d3.format ","
 
+listItem = compile """
+<span class="id">{{ name }}</span>
+<a target='_blank' href="http://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id={{ id }}">
+  <span class="glyphicon glyphicon-chevron-right"></span>
+</a>
+"""
+
 class ListView extends Spine.Controller
   constructor: ->
-    super
+    super arguments...
     throw "@data required" unless @data
     @$el.hide()
     @render()

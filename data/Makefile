@@ -1,15 +1,12 @@
 all: geojson topojson copy
 
 geojson:
-	./make_geojson.py
+	mkdir -p raw-data
+	./make-json.py create
 
 topojson:
-	topojson -q 1e5 -o ctx.json -- data.json
-	./test_quantization.py 1e5
-
-json:
-	./make_json.py
-	cp data.json ../app/data/data.json
+	geo2topo -q 1e5 -o ctx.json -- data.json
+	./test-quantization.py 1e5
 
 copy:
 	cp ctx.json ../app/data/ctx.json

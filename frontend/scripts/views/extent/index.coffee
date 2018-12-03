@@ -4,7 +4,7 @@ template = require "./template.html"
 
 class ExtentControl extends Spine.Controller
   constructor: ->
-    super
+    super arguments...
     throw "@map required" unless @map
     @render()
     @expanded = false

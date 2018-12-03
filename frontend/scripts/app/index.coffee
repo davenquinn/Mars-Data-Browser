@@ -5,13 +5,26 @@ Map = require "../views/map"
 DataManager = require "./data"
 ExtentControl = require "../views/extent"
 DataBrowser = require "../views/browser"
+{compile} = require 'handlebars'
 
 options = require "./options"
-loading = require "./loading.html"
+
+loading = compile """
+<div id="loading">
+  <h4>Loading {{name}} data</h4>
+  <div id="preloader-bars">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+  </div>
+</div>
+"""
 
 class TitleControl extends Spine.Controller
   constructor: ->
-    super
+    super arguments...
     @normal = @$el.text()
   set: (name)=>
     name = if name? then "<a href='#/'>Mars data</a>: <b>#{name}</b>" else @normal
@@ -20,8 +33,7 @@ class TitleControl extends Spine.Controller
 class App extends Spine.Controller
   data: {}
   constructor: ->
-    @el = "#main"
-    super
+    super el: "#main"
     @title = new TitleControl el: @$("h1")
     @map = new Map(el: "#map")
     @_browser = @$ "#browser"

@@ -7,7 +7,7 @@ template = require "./template.html"
 
 class DataBrowser extends Spine.Controller
   constructor: ->
-    super
+    super arguments...
     throw "@data required" unless @data
     @$el.html template
     @list = new ListControl
