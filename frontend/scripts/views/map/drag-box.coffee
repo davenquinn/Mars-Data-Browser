@@ -4,7 +4,7 @@ Spine = require "spine"
 class ExtentControl extends Spine.Controller
   enabled: false
   constructor: ->
-    super
+    super arguments...
     @_el = d3.select @el[0]
       .attr class: "selection_container"
 

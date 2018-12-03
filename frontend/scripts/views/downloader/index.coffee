@@ -2,14 +2,22 @@ d3 = require "d3"
 Spine = require "spine"
 moment = require "moment"
 template = require "./template.html"
-pds_template = require "./pds_file.hbs"
+{compile} = require 'handlebars'
+
+pds_template = compile """
+#Date Report Generated: {{date}}
+#INSTRUMENT,	TYPE,	PRODUCT ID,	OBSERVATION TIME,	CENTER LATITUDE (IF AVAILABLE),	CENTER LONGITUDE (IF AVAILABLE),	ORBITAL DATA EXPLORER PRODUCT LINK,	ORBITAL DATA EXPLORER PRODUCT FILES LINK
+{{#each features}}
+MRO CTX,	EDR,	{{id}},	,	,	,	http://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id={{id}},	http://ode.rsl.wustl.edu/mars/productfiles.aspx?product_id={{id}}
+{{/each}}
+"""
 
 window.jQuery = require "jquery"
 require "bootstrap-sass/assets/javascripts/bootstrap/dropdown"
 
 class Downloader extends Spine.Controller
   constructor: ->
-    super
+    super arguments...
     throw "@data required" unless @data
     @pds_template = pds_template
     @render()

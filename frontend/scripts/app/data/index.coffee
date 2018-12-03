@@ -17,7 +17,7 @@ class DataManager extends Spine.Module
   bind: DataManager.bind
   trigger: DataManager.trigger
   constructor: (@dataset, @footprints)->
-    super
+    super arguments...
     @features = []
     @selection = []
     @total = @footprints.length
