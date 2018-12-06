@@ -1,6 +1,5 @@
 d3 = require "d3"
 Spine = require "spine"
-template = require "./template.html"
 {compile} = require 'handlebars'
 
 f = d3.format ","
@@ -10,6 +9,18 @@ listItem = compile """
 <a target='_blank' href="http://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id={{ id }}">
   <span class="glyphicon glyphicon-chevron-right"></span>
 </a>
+"""
+
+template = """
+<h2>Footprints</h2>
+<div class="total"></div>
+<ul></ul>
+<div class="selected">
+  <span class="number-selected"></span>
+  <button class="clear btn btn-warning btn-xs" style="display:none;">
+    Clear Selection
+  </button>
+</div>
 """
 
 class ListView extends Spine.Controller

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-cd "$(git rev-parse --show-toplevel)"
-mkdir -p dist
-rm -f dist/*
-cp -r data/build dist/data
-parcel serve frontend/index.html

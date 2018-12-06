@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
+# Usage: build [--watch]
 
 cd "$(git rev-parse --show-toplevel)"
+npm install
 mkdir -p dist
 rm -f dist/*
 cp -r data/build dist/data
-parcel build --public-url './' frontend/index.html
+
+action="build --public-url ./" # By default, we just build
+[ "$1" = '--watch' ] && action="serve"
+
+# Run the build command
+$(npm bin)/parcel $action frontend/index.html

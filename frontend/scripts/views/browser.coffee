@@ -1,9 +1,13 @@
 $ = require "jquery"
 Spine = require "spine"
 
-ListControl = require "../list"
-DownloadControl = require "../downloader"
-template = require "./template.html"
+ListControl = require "./list"
+DownloadControl = require "./downloader"
+
+template = """
+<div id="list"></div>
+<div id="downloader"></div>
+"""
 
 class DataBrowser extends Spine.Controller
   constructor: ->

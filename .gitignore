@@ -6,10 +6,6 @@ package-lock.json
 node_modules
 .sass-cache
 
-app/scripts
-app/styles
-app/data
-
 data/raw-data
 .cache
 dist

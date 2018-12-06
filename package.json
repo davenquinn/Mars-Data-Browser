@@ -20,6 +20,7 @@
     "spine": "^1.3.2"
   },
   "scripts": {
-    "watch": "bin/watch"
+    "build": "bin/build",
+    "watch": "bin/build --watch"
   }
 }

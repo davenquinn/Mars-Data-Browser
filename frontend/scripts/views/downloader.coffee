@@ -1,9 +1,21 @@
 d3 = require "d3"
 Spine = require "spine"
 moment = require "moment"
-template = require "./template.html"
 {compile} = require 'handlebars'
 download = require 'downloadjs'
+
+template = """
+<div class="information" style="display:none;"><strong>Select some footprints in order to download data!</strong> You can do this by clicking footprints either in the list above or on the map.</div>
+<div class="btn-group">
+  <button type="button" class="btn btn-success dropdown-toggle btn-block btn-lg" data-toggle="dropdown">
+    Get Data<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#" class="simple_list">List of image IDs</a></li>
+    <li><a href="#" class="requirements">PDS Requirements File</a></li>
+  </ul>
+</div>
+"""
 
 pds_template = compile """
 #Date Report Generated: {{date}}

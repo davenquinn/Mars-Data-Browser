@@ -3,7 +3,13 @@ Spine = require "spine"
 $ = require "jquery"
 po = require "../../lib/polymaps"
 ExtentControl = require "./drag-box"
-attribution = require "./attribution.html"
+attribution = """
+<div class="attribution">
+  Tiles:
+  <a href="https://www.mapbox.com/blog/2012-08-26-mapping-mars/">Mapbox</a> |
+  <a href="https://astrogeology.usgs.gov">USGS</a>
+</div>
+"""
 
 class Map extends Spine.Controller
   constructor: ->
