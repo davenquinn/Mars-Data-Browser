@@ -38,11 +38,11 @@ These components were originally assembled using the `gulp` command line tool an
 To build the UI, run the watch script in the `bin` directory:
 
 ```
-> bin/watch
+> bin/build --watch
 ```
 
 This will build a website in the `dist/` directory, and keep a server running
 at `http://localhost:1234/` for testing.
 
-To build a compressed version for production, run the `bin/build` script.
+To build a compressed version for production, run the `bin/build` script with no arguments.
 
