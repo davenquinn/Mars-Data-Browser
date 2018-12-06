@@ -19,7 +19,6 @@ class Map extends Spine.Controller
     @bboxActive = false
 
   render: ->
-    self = this
     @createMap()
     @el.append attribution
 
@@ -34,7 +33,9 @@ class Map extends Spine.Controller
     throw "@data required" unless @data
     @log "Adding data to map"
     @setupLayer()
-    @listenTo @bbox, "updated", @data.updateExtent
+    @listenTo @bbox, "updated", (ex)=>
+      @log "Passing extent"
+      @data.updateExtent(ex)
     @listenTo @data, "updated", @refresh
     @listenTo @data, "selection-updated", @updateSelection
     @listenTo @data, "hovered", @onHovered
@@ -97,6 +98,7 @@ class Map extends Spine.Controller
   resetView: => @features.attr "d", @path
 
   updateSelection: =>
+    @log "Updating selection"
     @features.classed "selected", (d)->d.selected
 
   clearFeatures: =>

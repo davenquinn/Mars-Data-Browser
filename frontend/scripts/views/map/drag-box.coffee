@@ -32,8 +32,10 @@ class ExtentControl extends Spine.Controller
     @map.poly.on "move", @reset
 
     d3.select("body")
-      .on "keydown", => @enable() if d3.event.shiftKey
-      .on "keyup", => @disable() if d3.event.keyIdentifier is "Shift"
+      .on "keydown", =>
+        @enable() if d3.event.shiftKey
+      .on "keyup", =>
+        @disable() unless d3.event.shiftKey
 
   reset: (e)=>
     if @extent?
@@ -42,8 +44,9 @@ class ExtentControl extends Spine.Controller
     @drag.call @brush
 
   onBrush: =>
-    ex = @brush.extent()
-    @trigger "changed", @project ex
+    ex = @project @brush.extent()
+    @log "Updated extent: #{ex}"
+    @trigger "changed", ex
 
   enable: =>
     @drag
@@ -51,6 +54,7 @@ class ExtentControl extends Spine.Controller
       .style "pointer-events": "all"
       .selectAll "rect"
         .style "pointer-events": "all"
+    @enabled = true
     @reset()
 
   project: (ex)=>
@@ -69,9 +73,9 @@ class ExtentControl extends Spine.Controller
       .selectAll "rect"
         .style "pointer-events": "none"
 
+    @enabled = false
     ex = @brush.extent()
-
-    return unless ex
+    return unless ex?
     if ex[0][0] == ex[1][0]
       @log "No extent selected"
       @extent = null
@@ -87,10 +91,9 @@ class ExtentControl extends Spine.Controller
         ++i
       true
 
-    @log ex
+    @log "Updated extent: #{ex}"
     ex = @project ex
     return if same(@extent, ex)
-
     @extent = ex
     @trigger "updated", @extent
 
