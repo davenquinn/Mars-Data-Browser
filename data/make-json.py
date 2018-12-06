@@ -8,7 +8,6 @@ import os
 import json
 from subprocess import call
 from itertools import chain, product
-
 # External modules
 import click
 import fiona
@@ -27,6 +26,11 @@ datadir = os.path.join(__dir__,"raw-data")
 
 echo = lambda x: click.secho(x, fg="cyan")
 
+def mkdirp(*args):
+    directory = os.path.join(*args)
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
+
 def run(command):
     click.secho(command, fg="cyan")
     call(command, shell=True)
@@ -43,6 +47,7 @@ def urls():
 
 def download_files():
     click.secho("Downloading data", fg="green")
+    mkdirp(datadir)
     run("rm -f {}*".format(datadir))
     for url in urls():
         c = "curl {url} | tar -xz -C {d}"
@@ -90,6 +95,8 @@ def update():
 
         iterators = (import_data(inst,d) for d in types)
         collection = list(chain(*iterators))
+
+        mkdirp(__dir__, "build")
         fn = os.path.join(__dir__,"build",inst+".json")
 
         with open(fn,"w") as outfile:
