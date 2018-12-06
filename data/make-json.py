@@ -19,7 +19,7 @@ coverages = dict(
     ctx=["edr"],
     hirise=["rdr","rdrv11"])#,
     #crism=["trdr"])
-baseurl = "http://ode.rsl.wustl.edu/mars/coverageshapefiles/mars/mro/{inst}/{dsid}/{file}.tar.gz"
+baseurl = "https://ode.rsl.wustl.edu/mars/coverageshapefiles/mars/mro/{inst}/{dsid}/{file}.tar.gz"
 basename = "mars_mro_{inst}_{dsid}_c{lon}a"
 
 __dir__ = os.path.dirname(os.path.realpath(__file__))
@@ -90,7 +90,7 @@ def update():
 
         iterators = (import_data(inst,d) for d in types)
         collection = list(chain(*iterators))
-        fn = os.path.join(__dir__,"..","app","data",inst+".json")
+        fn = os.path.join(__dir__,"build",inst+".json")
 
         with open(fn,"w") as outfile:
             json.dump(collection, outfile, allow_nan=False)

@@ -1,7 +1,7 @@
 all: geojson topojson copy
 
 geojson:
-	mkdir -p raw-data
+	mkdir -p raw-data build
 	./make-json.py create
 
 topojson:
