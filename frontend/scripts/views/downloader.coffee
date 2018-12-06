@@ -37,10 +37,10 @@ class Downloader extends Spine.Controller
     @listenTo @data, "updated selection-updated", @update
 
   render: ->
-    @$el.html template
+    @el.html template
     @button = @$(".btn-group")
     @button.hide()
-    @$el.hide()
+    @el.hide()
 
   enable: ->
     @$(".information").hide 400
@@ -51,7 +51,7 @@ class Downloader extends Spine.Controller
     @button.hide 400
 
   update: =>
-    @$el.show()
+    @el.show()
     if @data.selection.length > 0
       @enable()
     else

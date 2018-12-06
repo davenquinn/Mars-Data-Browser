@@ -15,11 +15,11 @@ class ExtentControl extends Spine.Controller
     @brush = d3.svg.brush()
 
     xscale = d3.scale.linear()
-      .domain [0, @map.$el.width()]
-      .range [0, @map.$el.width()]
+      .domain [0, @map.el.width()]
+      .range [0, @map.el.width()]
     yscale = d3.scale.linear()
-      .domain [0,@map.$el.height()]
-      .range [0,@map.$el.height()]
+      .domain [0,@map.el.height()]
+      .range [0,@map.el.height()]
 
     @brush
       .x(xscale)

@@ -26,10 +26,10 @@ loading = compile """
 class TitleControl extends Spine.Controller
   constructor: ->
     super arguments...
-    @normal = @$el.text()
+    @normal = @el.text()
   set: (name)=>
     name = if name? then "<a href='#/'>Mars data</a>: <b>#{name}</b>" else @normal
-    @$el.html name
+    @el.html name
 
 class App extends Spine.Controller
   data: {}

@@ -27,7 +27,7 @@ class ListView extends Spine.Controller
   constructor: ->
     super arguments...
     throw "@data required" unless @data
-    @$el.hide()
+    @el.hide()
     @render()
     @listenTo @data, "updated", @refresh
     @listenTo @data, "selection-updated", @updateSelection
@@ -39,11 +39,11 @@ class ListView extends Spine.Controller
     "click .btn.clear": "clearSelection"
 
   render: ->
-    @$el.html template
+    @el.html template
 
   refresh: (features) =>
     if features.length > 0
-      @$el.show 400
+      @el.show 400
     @$(".total").text "#{f(features.length)} of #{f(@data.total)} displayed"
     @features = d3.select(@$("ul")[0])
       .selectAll("li")

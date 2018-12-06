@@ -29,7 +29,7 @@ class ExtentControl extends Spine.Controller
     "click a.zoom-to": "zoomToExtent"
 
   render: ->
-    @$el.html template
+    @el.html template
     return
 
   updateExtent: (e) =>

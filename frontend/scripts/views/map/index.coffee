@@ -21,7 +21,7 @@ class Map extends Spine.Controller
   render: ->
     self = this
     @createMap()
-    @$el.append attribution
+    @el.append attribution
 
     @footprints = @overlay.append("g").attr("class", "footprints")
 
