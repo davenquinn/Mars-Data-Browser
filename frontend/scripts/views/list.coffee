@@ -6,7 +6,7 @@ f = d3.format ","
 
 listItem = compile """
 <span class="id">{{ name }}</span>
-<a target='_blank' href="http://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id={{ id }}">
+<a target='_blank' href="https://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id={{ id }}">
   <span class="glyphicon glyphicon-chevron-right"></span>
 </a>
 """
