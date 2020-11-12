@@ -83,12 +83,7 @@ def import_data(inst,dsid):
                     i=fid)
             click.echo(i)
 
-@click.group()
-def cli():
-    pass
-
-@cli.command()
-def update():
+def generate_json():
     """Regenerate data files"""
     for inst, types in coverages.items():
         echo("Importing {} data".format(inst))
@@ -103,11 +98,20 @@ def update():
             json.dump(collection, outfile, allow_nan=False)
         echo("{0} features written\n".format(len(collection)))
 
+
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+def update():
+    generate_json()
+
 @cli.command()
 def create():
     """Downloads and generates data files"""
     download_files()
-    update()
+    generate_json()
 
 if __name__ == "__main__":
     cli()
