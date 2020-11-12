@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "bin/build",
-    "watch": "bin/build --watch"
+    "watch": "bin/build --watch",
+    "dev": "npm run watch"
   }
 }

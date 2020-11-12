@@ -4,7 +4,7 @@
 cd "$(git rev-parse --show-toplevel)"
 npm install
 mkdir -p dist
-rm -f dist/*
+rm -rf dist/*
 cp -r data/build dist/data
 
 action="build --public-url ./" # By default, we just build

@@ -6,7 +6,7 @@ ExtentControl = require "./drag-box"
 attribution = """
 <div class="attribution">
   Tiles:
-  <a href="https://www.mapbox.com/blog/2012-08-26-mapping-mars/">Mapbox</a> |
+  <a href="https://www.openplanetary.org/opm">OpenPlanetaryMap</a> |
   <a href="https://astrogeology.usgs.gov">USGS</a>
 </div>
 """
@@ -56,8 +56,7 @@ class Map extends Spine.Controller
         .zoomRange [4,9]
         .add po.interact()
 
-    url = po.url("http://{S}.tiles.mapbox.com/v3/herwig.map-tly29w1z/{Z}/{X}/{Y}.png")
-      .hosts ["a","b","c","d"]
+    url = po.url("http://s3-eu-west-1.amazonaws.com/whereonmars.cartodb.net/mola-gray/{Z}/{X}/{y}.png")
 
     dz = Math.log(window.devicePixelRatio or 1)/Math.LN2
 

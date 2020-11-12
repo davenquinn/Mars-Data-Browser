@@ -196,10 +196,12 @@ po.url = function(template) {
     }
     return template.replace(/{(.)}/g, function(s, v) {
       switch (v) {
+        // Add TMS coordinates option
         case "S": return hosts[(Math.abs(c.zoom) + c.row + column) % hosts.length];
         case "Z": return c.zoom;
         case "X": return column;
         case "Y": return c.row;
+        case "y": return (1 << c.zoom) - c.row - 1;
         case "B": {
           var nw = po.map.coordinateLocation({row: c.row, column: column, zoom: c.zoom}),
               se = po.map.coordinateLocation({row: c.row + 1, column: column + 1, zoom: c.zoom}),
