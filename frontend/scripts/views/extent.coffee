@@ -10,7 +10,11 @@ template = """
         <li><span class='l'>Latitude</span><span class="latmin"></span><span class="latmax"></span></li>
     </ul>
 </div>
-<p style="display:none" class="info2"><strong>Shift+click/drag the map</strong> to modify the bounding box.</p>
+<p style="display:none" class="info2">
+  <strong>Shift+click/drag the map</strong> to modify the bounding box.
+  Any footprints you select will be retained.
+  To begin a new selection, click "Clear Selection.
+</p>
 """
 
 class ExtentControl extends Spine.Controller
