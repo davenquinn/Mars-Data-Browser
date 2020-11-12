@@ -12,8 +12,7 @@ template = """
 </div>
 <p style="display:none" class="info2">
   <strong>Shift+click/drag the map</strong> to modify the bounding box.
-  Any footprints you select will be retained.
-  To begin a new selection, click "Clear Selection.
+  Any footprints you select will be retained until you click <strong>Clear Selection</strong>.
 </p>
 """
 
