@@ -6,7 +6,7 @@ f = d3.format ","
 
 listItem = compile """
 <span class="id">{{ name }}</span>
-<a target='_blank' href="https://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id={{ id }}">
+<a target='_blank' href="{{ href }}">
   <span class="glyphicon glyphicon-chevron-right"></span>
 </a>
 """
@@ -22,6 +22,13 @@ template = """
   </button>
 </div>
 """
+
+index_link = (d, dataset)->
+  if dataset.id == 'ctx-global'
+    east_prefix = d.id.substr(0, d.id.indexOf('_'))
+    return "http://murray-lab.caltech.edu/CTX/tiles/beta01/"+east_prefix+"/"
+  console.log(d)
+  return "https://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id=#{d.id}"
 
 class ListView extends Spine.Controller
   constructor: ->
@@ -51,7 +58,7 @@ class ListView extends Spine.Controller
 
     @features.enter()
       .append("li")
-        .html (d) -> listItem name: d.id.slice(0, 15),id: d.id
+        .html (d) => listItem name: d.id.slice(0, d.id.length-4), href: index_link(d, @data.dataset)
         .on "click", @data.updateSelection
         .on "mouseover", @data.toggleHovered
         .on "mouseout", @data.toggleHovered
